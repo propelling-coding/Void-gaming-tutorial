@@ -1,7 +1,7 @@
 # Void-gaming-tutorial
 A tutorial for gaming on void Linux.
 
-This tutorial aims to help those who have just installed void, and would like a quick startup to playing games. A quick disclaimer - this tutorial is aimed at NVIDIA users primarily and I also can't account for all hardware combinations. For reference, I have an RTX 3060 and an i9 10900k. This tutorial will assume that you have just finished installing void, and is for Wayland users (but most things should still be relevant on an x11 environment). I am using niri + noctalia with lightdm. This also assumes that the multilib repository, multilib non-free and non-free repositories are enabled. A useful resource for this is the void handbook: https://docs.voidlinux.org/xbps/repositories/index.html
+This tutorial aims to help those who have just installed void, and would like a quick startup to playing games. A quick disclaimer - this tutorial is aimed primarily at NVIDIA users primarily and I also can't account for all hardware combinations. For reference, I have an RTX 3060 and an i9 10900k. This tutorial will assume that you have just finished installing void, but feel free to skip ahead if you've done some of these steps. I am using niri + noctalia with lightdm. This tutorial also assumes that the multilib repository, multilib non-free and non-free repositories are enabled. A useful resource for this is the void handbook: https://docs.voidlinux.org/xbps/repositories/index.html
 
 # Driver installation
 
@@ -29,6 +29,10 @@ Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/inte
 For all GPU vendors, vulkan has to be installed in some way. Almost every game will use vulkan (and OpenGL is handled by the driver anyway), so we **must** install vulkan.
 
 We will need the following packages: vulkan-loader and vulkan-loader-32bit. If you are developing anything graphical, vulkan-loader-devel may be handy. Vulkan-loader does exactly what it says: it loads vulkan when it's needed. We also need the 32bit version (most games are 32bit).
+
+Here is the command:
+
+sudo xbps-install vulkan-loader vulkan-loader-32bit
 
 # AMD/Intel users
 
