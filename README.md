@@ -13,6 +13,7 @@ sudo xbps-install nvidia nvidia-dkms nvidia-libs nvidia-libs-32bit
 
 For anybody who has an Nvidia card older than the 16 series, you will need to install the relevant driver packages for your card.
 
-<img width="662" height="129" alt="image" src="https://github.com/user-attachments/assets/d475df57-cf21-4957-8b3e-ece1ca5a4fc1" />
+<img width="621" height="126" alt="image" src="https://github.com/user-attachments/assets/b9b50a0f-c0ed-4f2c-82fa-4a8cff43474d" />
+
 
 For more infomation on nvidia drivers, use the void handbook: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/nvidia.html
