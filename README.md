@@ -74,7 +74,7 @@ This is a flatpak package, so after setting up flatpak, install like this:
 
 flatpak install flathub net.davidotek.pupgui2
 
-#fsync and esync - IMPORTANT!!!
+# fsync and esync - IMPORTANT!!!
 
 For whatever reason, fsync and esync are not configured on void, which leads to many games being unable to run. This is because they both replaced by NTsync, which is now installed into the linux kernel, however if it fails, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
 
