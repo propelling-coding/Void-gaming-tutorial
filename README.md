@@ -76,9 +76,7 @@ flatpak install flathub net.davidotek.pupgui2
 
 # Eync - IMPORTANT!!!
 
-For whatever reason, fsync and esync are not configured on void, which leads to many games being unable to run. This is because they both replaced by NTsync, which is now installed into the linux kernel, however if it fails, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
-
-This can sometimes be system-dependent on how you do this. I will write how I did this below. It may necessary to look online for other solutions.
+For whatever reason, esync is not configured on void, which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel, however if it is incompatible, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
 
 Firstly, insert vm.max_map_count=262144 in the file /etc/sysctl.conf. Then, run sudo sysctl -p, which will update the config. Finally, run cat /proc/sys/vm/max_map_count, which should print 262144.
 
@@ -91,7 +89,7 @@ Then add the following line to /etc/pam.d/login
 
 session         required        pam_limits.so
 
-Finally, add the following line to /etc/pam.d/lightdm (if you are not using lightdm, replace it with what your system uses).
+Finally, add the following line to /etc/pam.d/lightdm (if you are not using lightdm, replace it with your login manager)
 
 session   required pam_limits.so
 
@@ -117,6 +115,20 @@ Here are some websites for anybody interested on this topic:
 https://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 https://en.wikipedia.org/wiki/Linux_PAM
 https://wpsticky.com/proton-linux-gaming-explained-esync-fsync-and-performance-tweaks-for-steam-deck-and-pc/
+
+# Final steps (for most people)
+
+Open up ProtonUp-qt and click on steam and add version. Install the latest version of proton-GE to steam, and then launch steam. Go to compatibility, and install both proton hotfix and proton experimental (these will be useful later). Finally, install a game.
+
+# Gaming
+
+If the game has EAC, go to the EAC chapter below.
+
+For everybody else, try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section below.
+
+# EasyAntiCheat
+
+For EAC, you must install the EasyAntiCheat runtime. This can be found on the steam store like a game, so just install it and run the EAC game (the runtime will run when needed).
 
 
 
