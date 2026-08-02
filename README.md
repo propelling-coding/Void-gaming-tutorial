@@ -74,7 +74,7 @@ This is a flatpak package, so after setting up flatpak, install like this:
 
 flatpak install flathub net.davidotek.pupgui2
 
-# fsync and esync - IMPORTANT!!!
+# Eync - IMPORTANT!!!
 
 For whatever reason, fsync and esync are not configured on void, which leads to many games being unable to run. This is because they both replaced by NTsync, which is now installed into the linux kernel, however if it fails, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
 
@@ -102,12 +102,21 @@ Obviously, that was alot of commands and stuff, so here is an explanation for th
 
 Esync, fsync and NTsync are all technologies used by proton to help reduce its overhead. Because proton is converting dx3d calls to OpenGL/Vulkan, there is some CPU overhead, aswell as any calls to windows functions that have to be translated.
 
-Esync was the first of these to be created. Esync is designed to reduce the overhead of Windows synchronisation primitives, by using Linux's eventfd system to manage threaded tasks more efficiently. Practically, this causes esync to need a high file descriptor limit. File descriptors are essentially linux resources used for files and 
-other io objects. If this is too low, a esync cannot run.
+Esync was the first of these to be created. Esync is designed to reduce the overhead of Windows synchronization primitives, by using Linux's eventfd system to manage threaded tasks more efficiently. Practically, this causes esync to need a high file descriptor limit. File descriptors are essentially Linux resources used for files and 
+other IO objects. If this is too low, a esync cannot run.
 
 This is what raising the nofile limit is doing. When we edit limits.conf, we are telling Linux to let us have 1048576 running file descriptors at once. A soft limit is the current practical limit, which cannot exceed the hard limit, and is used by everyone but root. A hard limit is the physical limit it can allow, and can only really be touched by root. They are set both the same as we don't need to worry about this kind of usage.
 
-PAM is the library used for authentication on linux. When we edit /etc/pam.d/login and add our line, we are telling it that whenever there is a login to TTY, automatically execute pam_limits.so, which is a session module that will cause limit.conf to be read and run, changing the limits. Similarly, by changing /etc/pam.d/lightdm, whenever lightdm authenticates us, pam_limits.so will be read, enforcing the new limits.
+PAM is the library used for authentication on Linux. When we edit /etc/pam.d/login and add our line, we are telling it that whenever there is a login to TTY, automatically execute pam_limits.so, which is a session module that will cause limit.conf to be read and run, changing the limits. Similarly, by changing /etc/pam.d/lightdm, whenever lightdm authenticates us, pam_limits.so will be read, enforcing the new limits.
+
+From my understanding, the increase of vm.max_map_count has to be done because each file descriptor is memory mapped area, so if there are alot of them, we also need to ensure that there is allowed to be alot of memory mapped areas. I cannot entirely validate if this is why, but proton logs will complain if this is not increased.
+
+Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, however it necessary to have a fallback, hence why we still setup esync (and fsync, as I believe it to benefits from these parameters).
+
+Here are some websites for anybody interested on this topic:
+https://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
+https://en.wikipedia.org/wiki/Linux_PAM
+https://wpsticky.com/proton-linux-gaming-explained-esync-fsync-and-performance-tweaks-for-steam-deck-and-pc/
 
 
-Fsync
+
