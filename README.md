@@ -63,3 +63,21 @@ flatpak install flathub com.valvesoftware.Steam
 Protontricks and winetricks can help compatibility, and are also necessary when installing some mods (like Geode for Geometry dash).
 
 sudo xbps-install wine protontricks winetricks
+
+MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics (atleast for me). Therefore, I would only recommend it for intel or AMD users.
+
+sudo xbps-install MangoHud
+
+ProtonUp-Qt is another essential application, as it allows us to install other compatibility tools, one of which is Glorious Eggroll's proton (called Proton-GE). This proton can sometimes improve performance, or even cause games that couldn't run before to run incredibly well.
+
+This is a flatpak package, so after setting up flatpak, install like this:
+
+flatpak install flathub net.davidotek.pupgui2
+
+#fsync and esync - IMPORTANT!!!
+
+For whatever reason, fsync and esync are not configured on void, which leads to many games being unable to run. This is because they both replaced by NTsync, which is now installed into the linux kernel, however if it fails, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
+
+This can sometimes be system-dependent on how you do this. I will write how I did this below. It may necessary to look online for other solutions.
+
+Firstly, insert vm.max_map_count=262144 in the file /etc/sysctl.conf. Then, run sudo sysctl -p, which will update the config. Finally, run cat /proc/sys/vm/max_map_count, which should print 262144.
