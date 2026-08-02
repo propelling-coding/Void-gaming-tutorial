@@ -150,7 +150,8 @@ Try to run the game with proton hotfix. If this doesn't work, try experimental. 
 
 For EAC, you must install the EasyAntiCheat runtime. This can be found on the steam store like a game, so just install it and run the EAC game (the runtime will run when needed). Select proton-GE (as this generally works better for EAC games) and try to run the game. If it doesn't run, go to the troubleshooting section.
 
-# Other packages
+# Troubleshooting
 
+If launching a game is unsuccessful, firstly check if it works on any other distro. If it isn't Linux-compatible, sadly there is nothing you can do to play the game on void. If you are running Nvidia, run nvidia-smi. If it gives no error, your driver is most likely installed correctly.
 
 
