@@ -140,7 +140,7 @@ Open up ProtonUp-qt and click on steam and add version. Install the latest versi
 
 # Gaming
 
-If the game has EAC, go to the EAC section below.
+If everything went well, you should now be able to finally game!
 
 Try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section.
 
@@ -152,10 +152,6 @@ For EAC, you must install the EasyAntiCheat runtime. This can be found on the st
 
 Most non-steam games can be found on heroic-launcher. This can be installed via xbps. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
 
-# Discord
-
-To install d
-
 # Troubleshooting
 
 If launching a game is unsuccessful, firstly check if it works on any other distro. If it isn't Linux-compatible, sadly there is nothing you can do to play the game on void.
@@ -166,5 +162,4 @@ If you are on wayland, xwayland may not be working. The easiest step to check is
 
 Putting the launch option "PROTON_NO_NTSYNC=1 %command%" into the game may also help some games which refuse to launch, as this forces fsync or esync.
 
-If your graphics card is too old that it does not support vulkan, you may run into numerous issues. To check this, run lspci | grep "VGA", and search up your graphics card on TechPowerUp's database. Here, it will list if it supports vulkan. If it doesn't, put the launch option "PROTON_USE_WINE3D=1 %command%" in your launch options (on heroic, just select to use wine3d instead of vulkan). However, if your GPU doesn't support vulkan, I wouldn't recommend Linux, as wine3D can be significantly slower than running native DX3D on windows (limited testing).
-
+If your graphics card is too old that it does not support vulkan, you may run into numerous issues. To check this, run lspci | grep "VGA", and search up your graphics card on TechPowerUp's database. Here, it will list if it supports vulkan. If it doesn't, put the launch option "PROTON_USE_WINE3D=1 %command%" in your launch options (on heroic, just select to use wine3d instead of vulkan). However, if your GPU doesn't support vulkan, I wouldn't recommend Linux, as wine3D can be significantly slower than running native DX3D on windows (from my limited testing).
