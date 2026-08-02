@@ -99,6 +99,4 @@ After restarting, run ulimit -Hn and ulimit -n. If everything has worked, it sho
 
 # So, what is this actually doing?
 
-----
-Long explanation
-----
+Explanation
