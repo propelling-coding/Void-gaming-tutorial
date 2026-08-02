@@ -40,7 +40,7 @@ You will have to change a kernel parameter for Wayland + NVIDIA to work correctl
 
 sudo xbps-install grub-customizer
 
-Then, go into grub-customizer, and under kernel parameters, add "nvidia_drm.modeset=1".
+Then, go into grub-customizer, and under kernel parameters, add "nvidia-drm.modeset=1".
 
 # Vulkan
 
