@@ -22,6 +22,7 @@ For more information on Nvidia drivers, use the void handbook: https://docs.void
 As I mentioned earlier, since I don't have an Intel/AMD GPU, I am unable to provide reliable information. Here are the relevant void handbook pages:
 
 AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/amd.html
+
 Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/intel.html
 
 # Vulkan
