@@ -36,7 +36,7 @@ For more information on Nvidia drivers, use the void handbook: https://docs.void
 As I mentioned earlier, since I don't have an Intel/AMD GPU, I am unable to provide reliable information. Here are the relevant void handbook pages:
 
 AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/amd.html
-Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/intel.html
+Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/Intel.html
 
 After installing your driver, you can proceed.
 
@@ -115,7 +115,7 @@ Protontricks and winetricks can help compatibility, and are also necessary when 
 sudo xbps-install wine protontricks winetricks
 ```
 
-MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics on specifically void (atleast for me). Therefore, I would only recommend it for intel or AMD users.
+MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics on specifically void (atleast for me). Therefore, I would only recommend it for Intel or AMD users.
 
 ```shell
 sudo xbps-install MangoHud
@@ -154,13 +154,16 @@ Finally, add the following line to /etc/pam.d/lightdm (if you are not using ligh
 session   required pam_limits.so
 ```
 
-After restarting, run:
+After restarting, run both of the following commands:
 
 ```shell
-ulimit -Hn and ulimit -n.
+ulimit -Hn
+```
+```shell
+ulimit -n
 ```
 
-If everything has worked, it should now say 1048576 for both.
+If everything has worked, it should say 1048576 for both.
 
 # So, what is this actually doing?
 Obviously, that was alot of commands and stuff, so here is an explanation for those who want to know.
