@@ -81,3 +81,24 @@ For whatever reason, fsync and esync are not configured on void, which leads to 
 This can sometimes be system-dependent on how you do this. I will write how I did this below. It may necessary to look online for other solutions.
 
 Firstly, insert vm.max_map_count=262144 in the file /etc/sysctl.conf. Then, run sudo sysctl -p, which will update the config. Finally, run cat /proc/sys/vm/max_map_count, which should print 262144.
+
+For the nofile limit, it's a little more complicated. Firstly, edit the file /etc/security/limits.conf, and add the two following lines.
+
+* soft nofile 1048576
+* hard nofile 1048576
+
+Then add the following line to /etc/pam.d/login
+
+session         required        pam_limits.so
+
+Finally, add the following line to /etc/pam.d/lightdm (if you are not using lightdm, replace it with what your system uses).
+
+session   required pam_limits.so
+
+After restarting, run ulimit -Hn and ulimit -n. If everything has worked, it should now say 1048576 for both.
+
+# So, what is this actually doing?
+
+----
+Long explanation
+----
