@@ -30,7 +30,7 @@ Anybody using wayland may have to do a couple more tweaks. Firstly, ensure Xwayl
 
 sudo xbps-install xorg-server-xwayland xorg-server-xwayland-32bit
 
-Furthermore, if Xwayland refuses to work (this can be seen simply if steam refuses to launch), you may need Xwayland satilite. Install like this:
+Furthermore, if Xwayland refuses to work, you may need Xwayland satilite. Install like this:
 
 sudo xbps-install xwayland-satellite
 
@@ -58,7 +58,7 @@ I am not sure exactly what packages you need, but in some way you will need to b
 
 # Steam and other useful packages
 
-At this point, we are ready to install steam. There are two ways to do this - native (xbps steam) and flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, flatpak can become a hassle. See the later chapter on multiple drives.
+At this point, we are ready to install steam. There are two ways to do this - native (xbps steam) and flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, flatpak can become a hassle. See the later section on multiple drives.
 
 If you have chosen xbps steam, simply install it as you would expect:
 
@@ -85,8 +85,6 @@ sudo xbps-install wine protontricks winetricks
 MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics on specifically void (atleast for me). Therefore, I would only recommend it for intel or AMD users.
 
 sudo xbps-install MangoHud
-
-
 
 ProtonUp-Qt is another essential application, as it allows us to install other compatibility tools, one of which is Glorious Eggroll's proton (called Proton-GE). This proton can sometimes improve performance, or even cause games that couldn't run before to run incredibly well.
 
@@ -142,16 +140,31 @@ Open up ProtonUp-qt and click on steam and add version. Install the latest versi
 
 # Gaming
 
-If the game has EAC, go to the EAC chapter below.
+If the game has EAC, go to the EAC section below.
 
-Try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section below.
+Try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section.
 
 # EasyAntiCheat
 
 For EAC, you must install the EasyAntiCheat runtime. This can be found on the steam store like a game, so just install it and run the EAC game (the runtime will run when needed). Select proton-GE (as this generally works better for EAC games) and try to run the game. If it doesn't run, go to the troubleshooting section.
 
+# Non-steam games
+
+Most non-steam games can be found on heroic-launcher. This can be installed via xbps. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
+
+# Discord
+
+To install d
+
 # Troubleshooting
 
-If launching a game is unsuccessful, firstly check if it works on any other distro. If it isn't Linux-compatible, sadly there is nothing you can do to play the game on void. If you are running Nvidia, run nvidia-smi. If it gives no error, your driver is most likely installed correctly.
+If launching a game is unsuccessful, firstly check if it works on any other distro. If it isn't Linux-compatible, sadly there is nothing you can do to play the game on void.
 
+If you are running Nvidia, run nvidia-smi. If it gives no error, your driver is most likely installed correctly. Then, try run vkcube. If this fails, you most likely haven't installed vulkan correctly, therefore you should refer back to the earlier section on installing vulkan.
+
+If you are on wayland, xwayland may not be working. The easiest step to check is by installing xterm, and trying to run it. If it does not run, xwayland is not working. This could be because xwayland-satilite is not installed. Refer back to the wayland section to learn how to install it.
+
+Putting the launch option "PROTON_NO_NTSYNC=1 %command%" into the game may also help some games which refuse to launch, as this forces fsync or esync.
+
+If your graphics card is too old that it does not support vulkan, you may run into numerous issues. To check this, run lspci | grep "VGA", and search up your graphics card on TechPowerUp's database. Here, it will list if it supports vulkan. If it doesn't, put the launch option "PROTON_USE_WINE3D=1 %command%" in your launch options (on heroic, just select to use wine3d instead of vulkan). However, if your GPU doesn't support vulkan, I wouldn't recommend Linux, as wine3D can be significantly slower than running native DX3D on windows (limited testing).
 
