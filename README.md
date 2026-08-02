@@ -98,5 +98,16 @@ session   required pam_limits.so
 After restarting, run ulimit -Hn and ulimit -n. If everything has worked, it should now say 1048576 for both.
 
 # So, what is this actually doing?
+Obviously, that was alot of commands and stuff, so here is an explanation for those who want to know.
 
-Explanation
+Esync, fsync and NTsync are all technologies used by proton to help reduce its overhead. Because proton is converting dx3d calls to OpenGL/Vulkan, there is some CPU overhead, aswell as any calls to windows functions that have to be translated.
+
+Esync was the first of these to be created. Esync is designed to reduce the overhead of Windows synchronisation primitives, by using Linux's eventfd system to manage threaded tasks more efficiently. Practically, this causes esync to need a high file descriptor limit. File descriptors are essentially linux resources used for files and 
+other io objects. If this is too low, a esync cannot run.
+
+This is what raising the nofile limit is doing. When we edit limits.conf, we are telling Linux to let us have 1048576 running file descriptors at once. A soft limit is the current practical limit, which cannot exceed the hard limit, and is used by everyone but root. A hard limit is the physical limit it can allow, and can only really be touched by root. They are set both the same as we don't need to worry about this kind of usage.
+
+PAM is the library used for authentication on linux. When we edit /etc/pam.d/login and add our line, we are telling it that whenever there is a login to TTY, automatically execute pam_limits.so, which is a session module that will cause limit.conf to be read and run, changing the limits. Similarly, by changing /etc/pam.d/lightdm, whenever lightdm authenticates us, pam_limits.so will be read, enforcing the new limits.
+
+
+Fsync
