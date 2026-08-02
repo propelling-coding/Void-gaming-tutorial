@@ -1,7 +1,7 @@
 # Void-gaming-tutorial
 A tutorial for gaming on void Linux.
 
-This tutorial aims to help those who have just installed void, and would like a quick startup to playing games. A quick disclaimer - this tutorial is aimed primarily at NVIDIA users primarily and I also can't account for all hardware combinations. For reference, I have an RTX 3060 and an i9 10900k. This tutorial will assume that you have just finished installing void, but feel free to skip ahead if you've done some of these steps. I am using niri + noctalia with lightdm. This tutorial also assumes that the multilib repository, multilib non-free and non-free repositories are enabled. A useful resource for this is the void handbook: https://docs.voidlinux.org/xbps/repositories/index.html
+This tutorial aims to help those who have just installed void, and would like a quick startup to playing games. A quick disclaimer - this tutorial is aimed primarily at NVIDIA users primarily and I can't account for all hardware/software combinations. For reference, I have an RTX 3060 and an i9 10900k. This tutorial will assume that you have just finished installing void, but feel free to skip ahead if you've done some of these steps. I am using niri + noctalia with lightdm. This tutorial also assumes that the multilib repository, multilib non-free and non-free repositories are enabled. A useful resource for this is the void handbook: https://docs.voidlinux.org/xbps/repositories/index.html
 
 # Driver installation
 
@@ -23,6 +23,24 @@ As I mentioned earlier, since I don't have an Intel/AMD GPU, I am unable to prov
 
 AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/amd.html
 Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/intel.html
+
+# Wayland users
+
+Anybody using wayland may have to do a couple more tweaks. Firstly, ensure Xwayland is installed, which can be done like this:
+
+sudo xbps-install xorg-server-xwayland xorg-server-xwayland-32bit
+
+Furthermore, if Xwayland refuses to work (this can be seen simply if steam refuses to launch), you may need Xwayland satilite. Install like this:
+
+sudo xbps-install xwayland-satellite
+
+# Nvidia users
+
+You will have to change a kernel parameter for Wayland + NVIDIA to work correctly (mostly for those running on a GPU older than the 16 series - newer drivers often enable this by default). The easiest way to do this is to install grub-customizer (if you are not using grub, you will have to look elsewhere on how to do this):
+
+sudo xbps-install grub-customizer
+
+Then, go into grub-customizer, and under kernel parameters, add "nvidia_drm.modeset=1".
 
 # Vulkan
 
@@ -64,9 +82,11 @@ Protontricks and winetricks can help compatibility, and are also necessary when 
 
 sudo xbps-install wine protontricks winetricks
 
-MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics (atleast for me). Therefore, I would only recommend it for intel or AMD users.
+MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics on specifically void (atleast for me). Therefore, I would only recommend it for intel or AMD users.
 
 sudo xbps-install MangoHud
+
+
 
 ProtonUp-Qt is another essential application, as it allows us to install other compatibility tools, one of which is Glorious Eggroll's proton (called Proton-GE). This proton can sometimes improve performance, or even cause games that couldn't run before to run incredibly well.
 
@@ -124,11 +144,13 @@ Open up ProtonUp-qt and click on steam and add version. Install the latest versi
 
 If the game has EAC, go to the EAC chapter below.
 
-For everybody else, try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section below.
+Try to run the game with proton hotfix. If this doesn't work, try experimental. If that doesn't work, try proton-GE. If all of these don't work, go to the troubleshooting section below.
 
 # EasyAntiCheat
 
-For EAC, you must install the EasyAntiCheat runtime. This can be found on the steam store like a game, so just install it and run the EAC game (the runtime will run when needed).
+For EAC, you must install the EasyAntiCheat runtime. This can be found on the steam store like a game, so just install it and run the EAC game (the runtime will run when needed). Select proton-GE (as this generally works better for EAC games) and try to run the game. If it doesn't run, go to the troubleshooting section.
+
+# Other packages
 
 
 
