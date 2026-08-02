@@ -37,3 +37,29 @@ sudo xbps-install vulkan-loader vulkan-loader-32bit
 # AMD/Intel users
 
 I am not sure exactly what packages you need, but in some way you will need to be able to load vulkan. I am also not certain if vulkan is already included in mesa. If it is, you won't need to do anything.
+
+# Steam and other useful packages
+
+At this point, we are ready to install steam. There are two ways to do this - native (xbps steam) and flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, flatpak can become a hassle. See the later chapter on multiple drives.
+
+If you have chosen xbps steam, simply install it as you would expect:
+
+sudo xbps-install steam
+
+If you have chosen flatpak steam, firstly install flatpak and add flathub as a repository. This can be done like this:
+
+sudo xbps-install flatpak
+
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+(Note: flatpak will prove very useful later - I would recommend installing it and adding flathub anyways so it is ready)
+
+Then, install steam:
+
+flatpak install flathub com.valvesoftware.Steam
+
+# More packages
+
+Protontricks and winetricks can help compatibility, and are also necessary when installing some mods (like Geode for Geometry dash).
+
+sudo xbps-install wine protontricks winetricks
