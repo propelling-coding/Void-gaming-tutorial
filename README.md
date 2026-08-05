@@ -169,21 +169,21 @@ To set-up screen-sharing, you may need to install a portal so discord can record
 
 
 # IMPORTANT!!!
-Esync does not seem to be configured on void (at least it wasn't for me), which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible (or just fails), a fallback is necessary. To configure this, you must raise the vm.max_map_count, and the nofile limit.
+Esync was not configured on my system when I installed void, which lead to many of my games being unable to run. This is because it has been largely replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible (or just fails), the system will try to fallback to esync (which will cause the game to crash if esync isn't configured). In order to set this up, you must raise the vm.max_map_count, and the nofile limit.
 
-Firstly, check if the nofile limit is sufficiently high by running
+Firstly, check if the nofile limit is already sufficiently high by running:
 
 ```shell
 ulimit -n
 ```
-If it is over 4096, this has already been configured
+If it is over 1000000, this has already been configured.
 
 Then, check virtual memory mappings:
 
 ```shell
 cat /proc/sys/vm/max_map_count
 ```
-If it is over 70000, this has already been completed. If not, you will need to raise these yourself.
+If it is sufficiently high (normally >200000) and the nofile limit has already been configured, esync has been setup already, and you can move on. Otherwise, you must raise these values for gaming on void to be smooth.
 
 **CAUTION:
 You will be editing files related to authentication. Double check everything you do (and even my instructions, because I could have written a typo). Proceed with ABSOLUTE caution.**
@@ -250,7 +250,7 @@ This is what raising the nofile limit is doing. When we edit limits.conf, we are
 
 PAM is the library used for authentication on Linux. When we edit /etc/pam.d/login and add our line, we are telling it that whenever there is a login to TTY, automatically execute pam_limits.so, which is a session module that will cause limit.conf to be read and run, changing the limits. Similarly, by changing /etc/pam.d/lightdm, whenever lightdm authenticates us, pam_limits.so will be read, enforcing the new limits.
 
-From my understanding, the increase of vm.max_map_count has to be done because modern games create ALOT of virtual memory mappings. Therefore, we need to ensure that there is allowed to be alot of memory mapped areas. I cannot entirely validate if this is why, but proton logs will complain if this is not increased.
+From my understanding, the increase of vm.max_map_count has to be done because modern games create ALOT of virtual memory mappings. Therefore, we need to ensure that there is allowed to be a lot of memory mapped areas.
 
 Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, however it necessary to have a fallback, hence why we still setup esync (and fsync, as I believe it to benefits from these parameters).
 
