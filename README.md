@@ -169,9 +169,7 @@ Then, check virtual memory mappings:
 ```shell
 cat /proc/sys/vm/max_map_count
 ```
-If it is over 70000, this has already been completed.
-
-If not, you will need to raise these yourself.
+If it is over 70000, this has already been completed. If not, you will need to raise these yourself.
 
 **CAUTION:
 You will be editing files related to authentication. Double check everything you do (and even my instructions, because I could have written a typo). Proceed with ABSOLUTE caution.**
@@ -262,11 +260,11 @@ For EAC, you must install the EasyAntiCheat runtime. This can be found on the st
 
 # Non-steam games
 
-Most non-steam games can be found on heroic-launcher. This can be installed via flatpak. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
+Most non-steam games can be found on heroic-launcher. This can be installed via Flatpak. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
 
 # Multiple drives
 
-In the case that multiple drives are being used, setup depends on whether flatpak steam(or heroic) is in use, and whether the second drive is EXT4 or NTFS.
+In the case that multiple drives are being used, setup depends on whether Flatpak steam(or heroic) is in use, and whether the second drive is EXT4 or NTFS.
 
 For all users, you will need to mount the drive on startup via /etc/fstab, and then point steam to the games library. To do this, firstly find your drive's UUID by running the following command:
 
