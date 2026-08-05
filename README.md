@@ -114,6 +114,7 @@ sudo xbps-install mesa-vulkan-radeon mesa-vulkan-radeon-32bit
 At this point, we are ready to install steam. There are two ways to do this - native (xbps) and Flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have Flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, Flatpak can become a hassle. See the later section on multiple drives.
 
 If you have chosen xbps steam, simply install it as you would expect:
+
 ```shell
 sudo xbps-install steam
 ```
@@ -330,6 +331,8 @@ ln -s /home/void/.local/share/Steam/steamapps/compatdata /mnt/games/SteamLibrary
 (I would recommend deleting all files on compat data before running this command)
 (Just note that this means that all the compatdata files will add up, and these files are NOT located on your games drive, but rather your ext4 drive!)
 
+More details on multi-drive configs can be found on the steam page on flathub: https://flathub.org/en-GB/apps/com.valvesoftware.Steam
+
 
 # Troubleshooting
 
@@ -348,3 +351,7 @@ If it is an EAC game, check online to ensure the developers have enabled EAC for
 If you are on multiple drives and are on NTFS, ensure that the symlink has been setup. Sometimes, you might need to move all protons and runtimes over to the EXT4 drive. Another issue could be with the ntfs3 driver. If you are on an old Linux kernel (you shouldn't be), this driver may not exist. In this case, you will have to use the slower ntfs-3g driver (just add it to the fstab instead of ntfs3 and it should work). This will come at a performance cost.
 
 One other step is to clear the game's cache by deleting any cache directories in the game, and clearing steam's shader cache. This varies from game to game, but to delete the steam cache, just go to settings, then storage and finally clear the cache.
+
+Some systems may not have an active dbus session (one way to test this is to try to launch multiple instances of Firefox. If you can't, there isn't an active dbus session). The solution is to go to /usr/share/wayland-sessions (or /usr/share/xsessions, although this issue is generally Wayland-specific) and open up the .desktop file for your desktop environment. Finally, change the "Exec" line to run with a dbus session (for example, on niri, I changed "Exec niri" to "Exec=dbus-run-session -- /usr/bin/niri --session" where niri is located in /usr/bin/niri).
+
+Thank you for reading this as this was my first guide. If you found it helpful, I would appreciate if you gave it a star. Happy gaming!
