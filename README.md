@@ -151,11 +151,11 @@ Discord is a package used commonly for voicechat and messaging. I would advise i
 flatpak install flathub com.discordapp.Discord
 ```
 
-To set-up screen-sharing, you may need to install a portal so discord can record the screen whilst in the flatpak sandbox. If you are on a wlroots compositor, install "xdg-desktop-portal-wlr". If you are on niri, install "xdg-desktop-portal-gnome" (add to the config to use the gnome one for screen record and the gtk one for anything else, otherwise you can run into issues). Most other environments have it setup by default. Every environment will need the "xdg-desktop-portal" package and if using gtk, they will need "xdg-desktop-portal-gtk".
+To set-up screen-sharing, you may need to install a portal so discord can record the screen whilst in the Flatpak sandbox. If you are on a wlroots compositor, install "xdg-desktop-portal-wlr". If you are on niri, install "xdg-desktop-portal-gnome" (add to the config to use the gnome one for ScreenCast and use the GTK one as default, FileChooser and OpenURL, otherwise you can run into issues). Most other environments have it setup by default. Every environment will need the "xdg-desktop-portal" package and, if using GTK, will need "xdg-desktop-portal-gtk".
 
 
 # IMPORTANT!!!
-Esync does not seem to be configured on void (atleast it wasn't for me), which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
+Esync does not seem to be configured on void (at least it wasn't for me), which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible (or just fails), a fallback is necessary. To configure this, you must raise the vm.max_map_count, and the nofile limit.
 
 Firstly, check if the nofile limit is sufficiently high by running
 
@@ -223,12 +223,11 @@ ulimit -n
 If everything has worked, it should say 1048576 for both.
 
 # So, what is this actually doing?
-Obviously, that was alot of commands and stuff, so here is an explanation for those who want to know.
+Obviously, that was a lot of commands and stuff, so here is an explanation for those who want to know.
 
-Esync, fsync and NTsync are all technologies used by proton to help reduce its overhead. Because proton is converting dx3d calls to OpenGL/Vulkan, there is some CPU overhead, aswell as any calls to windows functions that have to be translated.
+Esync, fsync and NTsync are all technologies used by proton to help reduce its overhead. Because proton is converting dx3d calls to OpenGL/Vulkan, there is some CPU overhead, as well as any calls to windows functions that have to be translated.
 
-Esync was the first of these to be created. Esync is designed to reduce the overhead of Windows synchronization primitives, by using Linux's eventfd system to manage threaded tasks more efficiently. Practically, this causes esync to need a high file descriptor limit. File descriptors are essentially Linux resources used for files and 
-other IO objects. If this is too low, a esync cannot run.
+Esync was the first of these to be created. Esync is designed to reduce the overhead of Windows synchronisation primitives, by using Linux's eventfd system to manage threaded tasks more efficiently. Practically, this causes esync to need a high file descriptor limit. File descriptors are essentially Linux resources used for files and  other IO objects. If this is too low, esync cannot run (or will, but not well at all).
 
 This is what raising the nofile limit is doing. When we edit limits.conf, we are telling Linux to let us have 1048576 running file descriptors at once. A soft limit is the current practical limit, which cannot exceed the hard limit, and is used by everyone but root. A hard limit is the physical limit it can allow, and can only really be touched by root. They are set both the same as we don't need to worry about this kind of usage.
 
@@ -296,13 +295,13 @@ UUID=YourUUID /mnt/games ext4 defaults,noatime, 0 2
 ```
 After this, reboot the system and go to folder /mnt/games. If everything worked, you should be able to access your game library, with normal user permissions.
 
-If you are using xbps steam, you should be able to add the library to your steam client by going in steam settings. If you are using flatpak steam, you will need to allow it access to /mnt/games, which is done with the following commnand:
+If you are using xbps steam, you should be able to add the library to your steam client by going in steam settings. If you are using Flatpak steam, you will need to allow it access to /mnt/games, which is done with the following command:
 
 ```shell
 flatpak override --user --filesystem=/mnt/games com.valvesoftware.Steam
 ```
 
-If you are using heroic, do the exact same command, but with heroic's flatpak id, and click "import game" for whatever game you want to play.
+If you are using heroic, do the exact same command, but with heroic's Flatpak id, and click "import game" for whatever game you want to play.
 For steam, add the folder in steam settings as a library.
 
 # NTFS users (multiple drives)
@@ -322,7 +321,7 @@ If launching a game is unsuccessful, firstly check if it works on any other dist
 
 If you are running Nvidia, run nvidia-smi. If it gives no error, your driver is most likely installed correctly. Then, try run vkcube. If this fails, you most likely haven't installed Vulkan correctly, therefore you should refer back to the earlier section on installing Vulkan.
 
-If you are on wayland, xwayland may not be working. The easiest step to check is by installing xterm, and trying to run it. If it does not run, xwayland is not working. This could be because xwayland-satilite is not installed. Refer back to the wayland section to learn how to install it.
+If you are on Wayland, xwayland may not be working. The easiest step to check is by installing xterm, and trying to run it. If it does not run, xwayland is not working. This could be because xwayland-satilite is not installed. Refer back to the Wayland section to learn how to install it.
 
 Putting the launch option "PROTON_NO_NTSYNC=1 %command%" into the game may also help some games which refuse to launch, as this forces fsync or esync.
 
@@ -331,3 +330,5 @@ If your graphics card is too old that it does not support Vulkan, you may run in
 If it is an EAC game, check online to ensure the developers have enabled EAC for linux (if not, the game won't run). If they have, ensure esync has been setup properly, and add the launch option "PROTON_NO_NTSYNC=1".
 
 If you are on multiple drives and are on NTFS, ensure that the symlink has been setup. Sometimes, you might need to move all protons and runtimes over to the EXT4 drive.
+
+One other step is to clear the game's cache by deleting any cache directories in the game, and clearing steam's shader cache. This varies from game to game, but to delete the steam cache, just go to settings, then storage and finally clear the cache.
