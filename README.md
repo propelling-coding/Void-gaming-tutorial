@@ -1,11 +1,24 @@
 # Void-gaming-tutorial
-A tutorial for gaming on void Linux.
 
-This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, and this tutorial is primarily meant for Nvidia users. This tutorial will assume that you have just completed installing void, so will go all the way from driver installation to playing games (but feel free to skip to the relevant bits for your install) A quick side-note - I am using Niri and Noctalia with LightDM, and every game that I play works fine on this combo after following these steps.
+This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, therefore I have much more knowledge on Nvidia hardware than Intel or AMD. I am using Niri and Noctalia with LightDM, so some steps may be different depending on your exact setup.
+
+This tutorial will assume that you have just completed installing void, so will go all the way from driver installation to playing games (but feel free to skip to the relevant bits for your install). Lets begin!
+
+# Update your system
+
+Before doing anything, ensure your system is up to date, so we don't run into any dependency problems when installing any new applications.
+
+```shell
+sudo xbps-install -S
+```
+
+```shell
+sudo xbps-install -Su
+```
 
 # Repositories
 
-Firstly, enable the multilib repository, non-free repository and multilib-nonfree repository. This will allow you to install 32bit packages, as well as "nonfree" packages (such as the nvidia driver). Here are the commands:
+Firstly, enable the multilib repository, non-free repository and multilib-nonfree repository. This will allow you to install 32bit packages, as well as "nonfree" packages (you should only need non-free repos when on Nvidia as the driver is not open source). Here are the commands:
 
 ```shell
 sudo xbps-install void-repo-nonfree void-repo-multilib void-repo-multilib-nonfree
@@ -32,7 +45,7 @@ For anybody who has an Nvidia card older than the 16 series, you will need to in
 For more information on Nvidia drivers, use the void handbook: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/nvidia.html
 
 # AMD/Intel users
-You should only need these two packages for both Intel and AMD - "mesa" and "mesa-32bit". Here is the command:
+You should only need these two packages for both Intel and AMD - **mesa** and **mesa-32bit**. Here is the command:
 
 ```shell
 sudo xbps-install mesa mesa-32bit
@@ -46,13 +59,13 @@ Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/Inte
 
 # Wayland users
 
-Anybody using Wayland may have to do a couple more tweaks. Firstly, ensure Xwayland is installed, which can be done like this:
+Anybody using Wayland may have to do a couple more tweaks. Firstly, ensure a package called **Xwayland** is installed (which essentially allows running X11 apps in Wayland), which can be done like this:
 
 ```shell
 sudo xbps-install xorg-server-xwayland xorg-server-xwayland-32bit
 ```
 
-Furthermore, if Xwayland refuses to work, you may need Xwayland satilite. Install like this:
+Furthermore, if Xwayland refuses to work, you may need **Xwayland-satilite** (on niri for example, this is a requirement). Install like this:
 
 ```shell
 sudo xbps-install xwayland-satellite
@@ -62,19 +75,19 @@ For more information, see the void handbook page: https://docs.voidlinux.org/con
 
 # Nvidia users
 
-You will have to change a kernel parameter for Wayland + Nvidia to work correctly (mostly for those running on a GPU older than the 16 series - newer drivers often enable this by default). The easiest way to do this is to install grub-customizer (if you are not using grub, you will have to look elsewhere on how to add the parameter):
+You will have to change a kernel parameter for Wayland + Nvidia to work correctly (mostly for those running on a GPU older than the 16 series - newer drivers often enable this by default). The easiest way to do this is to install **grub-customizer** (if you are not using grub, you will have to look elsewhere on how to add the parameter):
 
 ```shell
 sudo xbps-install grub-customizer
 ```
 
-Then, go into grub-customizer (launching from a terminal is sometimes necessary), and under kernel parameters, add "nvidia-drm.modeset=1".
+Then, go into grub-customizer (launching from a terminal is sometimes necessary), and under kernel parameters, add **nvidia-drm.modeset=1**.
 
 # Vulkan
 
 For all GPU vendors, Vulkan has to be installed in some way. Almost every game will use Vulkan (and OpenGL is handled by the driver anyway), so we **must** install Vulkan.
 
-We will need the following packages: vulkan-loader and vulkan-loader-32bit. If you are developing anything graphical, vulkan-loader-devel may be handy. vulkan-loader does exactly what it says: it loads Vulkan when it's needed. We also need the 32bit version (most games are 32bit).
+We will need the following packages: **vulkan-loader** and **vulkan-loader-32bit**. If you are developing anything graphical, **vulkan-loader-devel** may be handy. Vulkan-loader does exactly what it says: it loads Vulkan when it's needed. We also need the 32bit version (most games are 32bit).
 
 Here is the command:
 
@@ -84,13 +97,13 @@ sudo xbps-install vulkan-loader vulkan-loader-32bit
 
 # AMD/Intel users
 
-If you are on Intel, install the "mesa-vulkan-intel" package (and 32bit version too):
+If you are on Intel, install the **mesa-vulkan-intel** package (and 32bit version too):
 
 ```shell
 sudo xbps-install mesa-vulkan-intel mesa-vulkan-intel-32bit
 ```
 
-If you are on AMD, install the "mesa-vulkan-radeon" package (and 32bit version too):
+If you are on AMD, install the **mesa-vulkan-radeon** package (and 32bit version too):
 
 ```shell
 sudo xbps-install mesa-vulkan-radeon mesa-vulkan-radeon-32bit
@@ -151,7 +164,7 @@ Discord is a package used commonly for voicechat and messaging. I would advise i
 flatpak install flathub com.discordapp.Discord
 ```
 
-To set-up screen-sharing, you may need to install a portal so discord can record the screen whilst in the Flatpak sandbox. If you are on a wlroots compositor, install "xdg-desktop-portal-wlr". If you are on niri, install "xdg-desktop-portal-gnome" (add to the config to use the gnome one for ScreenCast and use the GTK one as default, FileChooser and OpenURL, otherwise you can run into issues). Most other environments have it setup by default. Every environment will need the "xdg-desktop-portal" package and, if using GTK, will need "xdg-desktop-portal-gtk".
+To set-up screen-sharing, you may need to install a portal so discord can record the screen whilst in the Flatpak sandbox. If you are on a wlroots compositor, install **xdg-desktop-portal-wlr**. If you are on niri, install **xdg-desktop-portal-gnome** (add to the config to use the gnome one for ScreenCast and use the GTK one as default, FileChooser and OpenURL, otherwise you can run into issues). Most other environments have it setup by default. Every environment will need the **xdg-desktop-portal** package and, if using GTK, will need **xdg-desktop-portal-gtk**.
 
 
 # IMPORTANT!!!
@@ -201,17 +214,18 @@ For the nofile limit, it's a little more complicated. Firstly, edit the file /et
 * hard nofile 1048576
 ```
 
-Then add the following line to /etc/pam.d/login
+Then add the following line to /etc/pam.d/login (if it isn't already there):
 
 ```shell
 session         required        pam_limits.so
 ```
 
-Finally, add the following line to /etc/pam.d/lightdm (if you are not using lightdm, replace it with your login manager)
+Finally, add the following line to /etc/pam.d/lightdm (if it isn't already there):
 
 ```shell
 session   required pam_limits.so
 ```
+**If you are not using LightDM, replace it with your login manager.**
 
 After restarting, run both of the following commands:
 
@@ -331,6 +345,6 @@ If your graphics card is too old that it does not support Vulkan, you may run in
 
 If it is an EAC game, check online to ensure the developers have enabled EAC for linux (if not, the game won't run). If they have, ensure esync has been setup properly, and add the launch option "PROTON_NO_NTSYNC=1".
 
-If you are on multiple drives and are on NTFS, ensure that the symlink has been setup. Sometimes, you might need to move all protons and runtimes over to the EXT4 drive.
+If you are on multiple drives and are on NTFS, ensure that the symlink has been setup. Sometimes, you might need to move all protons and runtimes over to the EXT4 drive. Another issue could be with the ntfs3 driver. If you are on an old Linux kernel (you shouldn't be), this driver may not exist. In this case, you will have to use the slower ntfs-3g driver (just add it to the fstab instead of ntfs3 and it should work). This will come at a performance cost.
 
 One other step is to clear the game's cache by deleting any cache directories in the game, and clearing steam's shader cache. This varies from game to game, but to delete the steam cache, just go to settings, then storage and finally clear the cache.
