@@ -206,7 +206,7 @@ For EAC, you must install the EasyAntiCheat runtime. This can be found on the st
 
 # Non-steam games
 
-Most non-steam games can be found on heroic-launcher. This can be installed via xbps. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
+Most non-steam games can be found on heroic-launcher. This can be installed via flatpak. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
 
 # Multiple drives
 
@@ -241,7 +241,26 @@ For ext4 users, add this line:
 ```shell
 UUID=YourUUID /mnt/games ext4 defaults,noatime, 0 2
 ```
+After this, reboot the system and go to folder /mnt/games. If everything worked, you should be able to access your game library, with normal user permissions.
 
+If you are using xbps steam, you should be able to add the library to your steam client by going in steam settings. If you are using flatpak steam, you will need to allow it access to /mnt/games, which is done with the following commnand:
+
+```shell
+flatpak override --user --filesystem=/mnt/games com.valvesoftware.Steam
+```
+
+If you are using heroic, do the exact same command, but with heroic's flatpak id, and click "import game" for whatever game you want to play.
+For steam, add the folder in steam settings as a library.
+
+# NTFS users (multiple drives)
+
+After all of this, you may have noticed that no games are starting. This is because of limitations of NTFS. To get around this, you will need to symlink the compat data of the steam library on the NTFS drive over to the EXT4 drive. Here is the command to do this:
+
+```shell
+ln -s /home/void/.local/share/Steam/steamapps/compatdata /mnt/games/SteamLibrary/steamapps/compatdata
+```
+(I would recommend deleting all files on compat data before running this command)
+(Just note that this means that all the compatdata files will add up, and these files are NOT located on your games drive, but rather your ext4 drive!)
 
 
 # Troubleshooting
@@ -257,3 +276,5 @@ Putting the launch option "PROTON_NO_NTSYNC=1 %command%" into the game may also 
 If your graphics card is too old that it does not support Vulkan, you may run into numerous issues. To check this, run lspci | grep "VGA", and search up your graphics card on TechPowerUp's database. Here, it will list if it supports Vulkan. If it doesn't, put the launch option "PROTON_USE_WINE3D=1 %command%" in your launch options (on heroic, just select to use wine3d instead of Vulkan). However, if your GPU doesn't support Vulkan, I wouldn't recommend Linux, as wine3D can be significantly slower than running native DX3D on windows (from my limited testing).
 
 If it is an EAC game, check online to ensure the developers have enabled EAC for linux (if not, the game won't run). If they have, ensure esync has been setup properly, and add the launch option "PROTON_NO_NTSYNC=1".
+
+If you are on multiple drives and are on NTFS, ensure that the symlink has been setup. Sometimes, you might need to move all protons and runtimes over to the EXT4 drive.
