@@ -354,4 +354,8 @@ One other step is to clear the game's cache by deleting any cache directories in
 
 Some systems may not have an active dbus session (one way to test this is to try to launch multiple instances of Firefox. If you can't, there isn't an active dbus session). The solution is to go to /usr/share/wayland-sessions (or /usr/share/xsessions, although this issue is generally Wayland-specific) and open up the .desktop file for your desktop environment. Finally, change the "Exec" line to run with a dbus session (for example, on niri, I changed "Exec niri" to "Exec=dbus-run-session -- /usr/bin/niri --session" where niri is located in /usr/bin/niri).
 
-Thank you for reading this as this was my first guide. If you found it helpful, I would appreciate if you gave it a star. Happy gaming!
+# Thank you
+
+Thank you for reading this as this was my first guide and my first ever repo on GitHub! If you found it helpful, I would appreciate if you gave it a star.
+
+Happy gaming!
