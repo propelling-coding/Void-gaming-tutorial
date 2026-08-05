@@ -171,8 +171,8 @@ cat /proc/sys/vm/max_map_count
 ```
 If it is over 70000, this has already been completed.
 
-![WARNING]
-You will be editing files related to authentication. Double check everything you do (and even my instructions, because I could have written a typo). Proceed with ABSOLUTE caution.
+>![WARNING]
+>You will be editing files related to authentication. Double check everything you do (and even my instructions, because I could have written a typo). >Proceed with ABSOLUTE caution.
 
 If not, begin by raising the virtual memory count by editing the file /etc/sysctl.conf and add:
 
