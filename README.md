@@ -252,7 +252,7 @@ PAM is the library used for authentication on Linux. When we edit /etc/pam.d/log
 
 From my understanding, the increase of vm.max_map_count has to be done because modern games create ALOT of virtual memory mappings. Therefore, we need to ensure that there is allowed to be a lot of memory mapped areas.
 
-Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, however it necessary to have a fallback, hence why we still setup esync (and fsync, as I believe it to benefits from these parameters).
+Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, however it necessary to have a fallback, hence why we still setup esync (and fsync, as I believe it too benefits from these parameters).
 
 Here are some websites for anybody interested on this topic:
 https://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
@@ -279,7 +279,7 @@ Most non-steam games can be found on heroic-launcher. This can be installed via 
 
 # Multiple drives
 
-In the case that multiple drives are being used, setup depends on whether Flatpak steam(or heroic) is in use, and whether the second drive is EXT4 or NTFS.
+In the case that multiple drives are being used, setup depends on whether Flatpak steam (or heroic) is in use, and whether the second drive is EXT4 or NTFS.
 
 For all users, you will need to mount the drive on startup via /etc/fstab, and then point steam to the games library. To do this, firstly find your drive's UUID by running the following command:
 
