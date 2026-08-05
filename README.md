@@ -1,7 +1,7 @@
 # Void-gaming-tutorial
 A tutorial for gaming on void Linux.
 
-This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, and this tutorial is primarily meant for NVIDIA users. This tutorial will assume that you have just completed installing void, so will go all the way from driver installation to playing games (but feel free to skip to the relevant bits for your install) A quick sidenote - I am using niri and noctalia with lightdm, and every game that I play works fine on this combo after following these steps.
+This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, and this tutorial is primarily meant for Nvidia users. This tutorial will assume that you have just completed installing void, so will go all the way from driver installation to playing games (but feel free to skip to the relevant bits for your install) A quick side-note - I am using Niri and Noctalia with LightDM, and every game that I play works fine on this combo after following these steps.
 
 # Repositories
 
@@ -17,7 +17,7 @@ sudo xbps-install -S
 
 # Driver installation
 
-For anybody who has an NVIDIA 16 series or newer card, install the following packages: **nvidia**, **nvidia-dkms**, **nvidia-libs** and **nvidia-libs-32bit**. The NVIDIA package will provide you with useful utilities such as nvidia-smi, and is essential for the driver to function. Nvidia-dkms will allow the nvidia driver to be built up against your kernel whenever it updates. Whilst this building can take a little time, it makes it much easier to update the system, and therefore I highly recommend it. The nvidia-libs package will provide OpenGL and Vulkan libraries, and is once again essential for the driver. Finally, nvidia-libs-32bit is the 32bit version, which is a requirement for 32bit applications (most games are 32bit).
+For anybody who has an Nvidia 16 series or newer card, install the following packages: **nvidia**, **nvidia-dkms**, **nvidia-libs** and **nvidia-libs-32bit**. The Nvidia package will provide you with useful utilities such as nvidia-smi, and is essential for the driver to function. Nvidia-dkms will allow the nvidia driver to be built up against your kernel whenever it updates. Whilst this building can take a little time, it makes it much easier to update the system, and therefore I highly recommend it. The nvidia-libs package will provide OpenGL and Vulkan libraries, and is once again essential for the driver. Finally, nvidia-libs-32bit is the 32bit version, which is a requirement for 32bit applications (most games are 32bit).
 
 Here is the command:
 
@@ -32,17 +32,17 @@ For anybody who has an Nvidia card older than the 16 series, you will need to in
 For more information on Nvidia drivers, use the void handbook: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/nvidia.html
 
 # AMD/Intel users
-
-As I mentioned earlier, since I don't have an Intel/AMD GPU, I am unable to provide reliable information. Here are the relevant void handbook pages:
-
-AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/amd.html
-Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/Intel.html
-
-From what I know, you should only need these two packages for both - mesa and mesa-32bit. Here is the command:
+You should only need these two packages for both Intel and AMD - "mesa" and "mesa-32bit". Here is the command:
 
 ```shell
 sudo xbps-install mesa mesa-32bit
 ```
+
+Here are the relevant void handbook pages for more info:
+
+AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/AMD.html
+Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/Intel.html
+
 
 # Wayland users
 
@@ -58,9 +58,11 @@ Furthermore, if Xwayland refuses to work, you may need Xwayland satilite. Instal
 sudo xbps-install xwayland-satellite
 ```
 
+For more information, see the void handbook page: https://docs.voidlinux.org/config/graphical-session/wayland.html
+
 # Nvidia users
 
-You will have to change a kernel parameter for Wayland + NVIDIA to work correctly (mostly for those running on a GPU older than the 16 series - newer drivers often enable this by default). The easiest way to do this is to install grub-customizer (if you are not using grub, you will have to look elsewhere on how to add the parameter):
+You will have to change a kernel parameter for Wayland + Nvidia to work correctly (mostly for those running on a GPU older than the 16 series - newer drivers often enable this by default). The easiest way to do this is to install grub-customizer (if you are not using grub, you will have to look elsewhere on how to add the parameter):
 
 ```shell
 sudo xbps-install grub-customizer
@@ -82,18 +84,28 @@ sudo xbps-install vulkan-loader vulkan-loader-32bit
 
 # AMD/Intel users
 
-I am not sure exactly what packages you need, but I believe it is "mesa-vulkan-intel" and "mesa-vulkan-radeon" for Intel and AMD respectively, aswell as 32-bit counterparts.
+If you are on Intel, install the "mesa-vulkan-intel" package (and 32bit version too):
+
+```shell
+sudo xbps-install mesa-vulkan-intel mesa-vulkan-intel-32bit
+```
+
+If you are on AMD, install the "mesa-vulkan-radeon" package (and 32bit version too):
+
+```shell
+sudo xbps-install mesa-vulkan-radeon mesa-vulkan-radeon-32bit
+```
 
 # Steam and other useful packages
 
-At this point, we are ready to install steam. There are two ways to do this - native (xbps steam) and flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, flatpak can become a hassle. See the later section on multiple drives.
+At this point, we are ready to install steam. There are two ways to do this - native (xbps) and Flatpak steam. Native xbps steam has the advantage that it will integrate into the void system more easily, however there may be more compatibility issues as it doesn't have Flatpak runtime. I have not had issues with it though. Another advantage is if you have multiple drives, Flatpak can become a hassle. See the later section on multiple drives.
 
 If you have chosen xbps steam, simply install it as you would expect:
 ```shell
 sudo xbps-install steam
 ```
 
-If you have chosen flatpak steam, firstly install flatpak and add flathub as a repository. This can be done like this:
+If you have chosen Flatpak steam, firstly install Flatpak and add Flathub as a repository. This can be done like this:
 
 ```shell
 sudo xbps-install flatpak
@@ -103,7 +115,7 @@ sudo xbps-install flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
-(Note: flatpak will prove very useful later - I would recommend installing it and adding flathub anyway so it's ready)
+(Note: Flatpak will prove very useful later - I would recommend installing it and adding Flathub anyway so it's ready)
 
 Then, install steam:
 
@@ -119,7 +131,7 @@ Protontricks and winetricks can help compatibility, and are also necessary when 
 sudo xbps-install wine protontricks winetricks
 ```
 
-MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats. However, for whatever reason, it cannot monitor Nvidia statistics on specifically void (atleast for me). Therefore, I would only recommend it for Intel or AMD users.
+MangoHud may be important for those wanting an RTSS-like way to monitor in-game stats.
 
 ```shell
 sudo xbps-install MangoHud
@@ -127,17 +139,40 @@ sudo xbps-install MangoHud
 
 ProtonUp-Qt is another essential application, as it allows us to install other compatibility tools, one of which is Glorious Eggroll's proton (called Proton-GE). This proton can sometimes improve performance, or even cause games that couldn't run before to run incredibly well.
 
-This is a flatpak package, so after setting up flatpak, install like this:
+This is a Flatpak package, so after setting up Flatpak, install like this:
 
 ```shell
 flatpak install flathub net.davidotek.pupgui2
 ```
 
+Discord is a package used commonly for voicechat and messaging. I would advise installing via flatpak as it is a "restricted" package, meaning one must use xbps-src to get discord (which means updating can be a bit of a pain). Install it like this:
+
+```shell
+flatpak install flathub com.discordapp.Discord
+```
+
+To set-up screen-sharing, you may need to install a portal so discord can record the screen whilst in the flatpak sandbox. If you are on a wlroots compositor, install "xdg-desktop-portal-wlr". If you are on niri, install "xdg-desktop-portal-gnome" (add to the config to use the gnome one for screen record and the gtk one for anything else, otherwise you can run into issues). Most other environments have it setup by default. Every environment will need the "xdg-desktop-portal" package and if using gtk, they will need "xdg-desktop-portal-gtk".
+
+
 # IMPORTANT!!!
+Esync does not seem to be configured on void (atleast it wasn't for me), which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
 
-For whatever reason, esync (and fsync) are not configured on void, which leads to many games being unable to run. This is because it has been replaced by NTsync, which is now installed into the Linux kernel. However if NTsync is incompatible, a fallback is necessary. To configure these, you must raise the vm.max_map_count, and the nofile limit.
+Firstly, check if the nofile limit is sufficiently high by running
 
-Firstly, edit the file /etc/sysctl.conf and add:
+```shell
+ulimit -n
+```
+If it is over 4096, this has already been configured
+
+Then, check virtual memory mappings:
+
+```shell
+cat /proc/sys/vm/max_map_count
+```
+If it is over 70000, this has already been completed.
+
+
+If not, begin by raising the virtual memory count by editing the file /etc/sysctl.conf and add:
 
 ```shell
 vm.max_map_count=262144 
@@ -199,7 +234,7 @@ This is what raising the nofile limit is doing. When we edit limits.conf, we are
 
 PAM is the library used for authentication on Linux. When we edit /etc/pam.d/login and add our line, we are telling it that whenever there is a login to TTY, automatically execute pam_limits.so, which is a session module that will cause limit.conf to be read and run, changing the limits. Similarly, by changing /etc/pam.d/lightdm, whenever lightdm authenticates us, pam_limits.so will be read, enforcing the new limits.
 
-From my understanding, the increase of vm.max_map_count has to be done because each file descriptor is memory mapped area, so if there are alot of them, we also need to ensure that there is allowed to be alot of memory mapped areas. I cannot entirely validate if this is why, but proton logs will complain if this is not increased.
+From my understanding, the increase of vm.max_map_count has to be done because modern games create ALOT of virtual memory mappings. Therefore, we need to ensure that there is allowed to be alot of memory mapped areas. I cannot entirely validate if this is why, but proton logs will complain if this is not increased.
 
 Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, however it necessary to have a fallback, hence why we still setup esync (and fsync, as I believe it to benefits from these parameters).
 
