@@ -1,7 +1,7 @@
 # Void-gaming-tutorial
 A tutorial for gaming on void Linux.
 
-This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, and this tutorial is primarily meant for NVIDIA users. This tutorial will assume that you have just completed installing void, so will go all the way from driver installation (but feel free to skip to the relevant bits for your install) A quick sidenote - I am using niri and noctalia with lightdm, and everything works on this combo (with my hardware)
+This tutorial aims to help those who have just installed void, and would like to game. For reference, I have an RTX 3060 and an i9 10900k, and this tutorial is primarily meant for NVIDIA users. This tutorial will assume that you have just completed installing void, so will go all the way from driver installation to playing games (but feel free to skip to the relevant bits for your install) A quick sidenote - I am using niri and noctalia with lightdm, and every game that I play works fine on this combo after following these steps.
 
 # Repositories
 
@@ -38,7 +38,11 @@ As I mentioned earlier, since I don't have an Intel/AMD GPU, I am unable to prov
 AMD: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/amd.html
 Intel: https://docs.voidlinux.org/config/graphical-session/graphics-drivers/Intel.html
 
-After installing your driver, you can proceed.
+From what I know, you should only need these two packages for both - mesa and mesa-32bit. Here is the command:
+
+```shell
+sudo xbps-install mesa mesa-32bit
+```
 
 # Wayland users
 
@@ -78,7 +82,7 @@ sudo xbps-install vulkan-loader vulkan-loader-32bit
 
 # AMD/Intel users
 
-I am not sure exactly what packages you need, but in some way you will need to be able to load Vulkan. I am also not certain if Vulkan is already included in mesa. If it is, you won't need to do anything.
+I am not sure exactly what packages you need, but I believe it is "mesa-vulkan-intel" and "mesa-vulkan-radeon" for Intel and AMD respectively, aswell as 32-bit counterparts.
 
 # Steam and other useful packages
 
@@ -183,7 +187,7 @@ Fsync and NTsync are newer, more optimized ways of doing what Esync achieves, ho
 
 Here are some websites for anybody interested on this topic:
 https://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
-https://en.wikipedia.org/wiki/Linux_PAM
+https://en.wikipedia.org/wiki/Linux_PAM/
 https://wpsticky.com/proton-linux-gaming-explained-esync-fsync-and-performance-tweaks-for-steam-deck-and-pc/
 
 # Final steps (for most people)
@@ -204,6 +208,42 @@ For EAC, you must install the EasyAntiCheat runtime. This can be found on the st
 
 Most non-steam games can be found on heroic-launcher. This can be installed via xbps. After installation, log into your account and download the game you want to play. Before playing, go into compatibility, and select proton-GE (using ProtonUp-qt is unnecessary for this, as heroic has it built-in). Finally, if the game has EAC, select to enable the EAC runtime and try to play the game.
 
+# Multiple drives
+
+In the case that multiple drives are being used, setup depends on whether flatpak steam(or heroic) is in use, and whether the second drive is EXT4 or NTFS.
+
+For all users, you will need to mount the drive on startup via /etc/fstab, and then point steam to the games library. To do this, firstly find your drive's UUID by running the following command:
+
+```shell
+lsblk -f
+```
+
+Then, copy your drive's UUID, and save it somewhere for later. A UUID is essentially a unique label given to each drive, that unlike other labels (like drive letters), will NEVER change, and are therefore the best way to talk to the drive.
+
+Create a location to mount the drive:
+
+```shell
+sudo mkdir -p /mnt/games
+```
+
+(note that if you are doing more than 1 extra drive, you may need to make more folders under /mnt)
+
+Now, if you are running an NTFS drive, edit your fstab (at /etc/fstab) and add the following new line:
+
+```shell
+UUID=YourUUID /mnt/games ntfs3 defaults,noatime,uid=1000,gid=1000,windows_names 0 0
+```
+
+(if when running the command "id", your user isn't id 1000, change the fstab entry "UID" to your user id, and "GID" to your group id)
+
+For ext4 users, add this line:
+
+```shell
+UUID=YourUUID /mnt/games ext4 defaults,noatime, 0 2
+```
+
+
+
 # Troubleshooting
 
 If launching a game is unsuccessful, firstly check if it works on any other distro. If it isn't Linux-compatible, sadly there is nothing you can do to play the game on void.
@@ -215,3 +255,5 @@ If you are on wayland, xwayland may not be working. The easiest step to check is
 Putting the launch option "PROTON_NO_NTSYNC=1 %command%" into the game may also help some games which refuse to launch, as this forces fsync or esync.
 
 If your graphics card is too old that it does not support Vulkan, you may run into numerous issues. To check this, run lspci | grep "VGA", and search up your graphics card on TechPowerUp's database. Here, it will list if it supports Vulkan. If it doesn't, put the launch option "PROTON_USE_WINE3D=1 %command%" in your launch options (on heroic, just select to use wine3d instead of Vulkan). However, if your GPU doesn't support Vulkan, I wouldn't recommend Linux, as wine3D can be significantly slower than running native DX3D on windows (from my limited testing).
+
+If it is an EAC game, check online to ensure the developers have enabled EAC for linux (if not, the game won't run). If they have, ensure esync has been setup properly, and add the launch option "PROTON_NO_NTSYNC=1".
