@@ -326,7 +326,7 @@ For steam, add the folder in steam settings as a library.
 After all of this, you may have noticed that no games are starting. This is because of limitations of NTFS. To get around this, you will need to symlink the compat data of the steam library on the NTFS drive over to the EXT4 drive. Here is the command to do this:
 
 ```shell
-ln -s /home/void/.local/share/Steam/steamapps/compatdata /mnt/games/SteamLibrary/steamapps/compatdata
+ln -s /home/YOURUSERNAME/.local/share/Steam/steamapps/compatdata /mnt/games/SteamLibrary/steamapps/compatdata
 ```
 (I would recommend deleting all files on compat data before running this command)
 (Just note that this means that all the compatdata files will add up, and these files are NOT located on your games drive, but rather your ext4 drive!)
